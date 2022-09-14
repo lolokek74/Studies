@@ -30,4 +30,22 @@ class UserController extends Controller
         }
         return back()->with(['errorSuccess' => 'Не верный логин или пароль !']);
     }
+
+
+    public function register()
+    {
+        return view('register');
+    }
+
+    public function registerPost(RequestValidationRegister $request)
+    {
+        $data = $request->validated();
+        $data['password'] = Hash::make($data['password']);
+
+        User::create($data);
+
+        return back()->with(['success' => true]);
+
+    }
+
 }
