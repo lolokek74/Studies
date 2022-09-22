@@ -57,4 +57,27 @@ class UserController extends Controller
 
         return back()->with(['success' => true]);
     }
+
+    /**
+     * Выход из массива
+     * @param Request $request
+     */
+    public function logout(Request $request)
+    {
+        auth()->logout();
+        $request->session()->regenerate();
+        return_redirect()->route('welcome');
+    }
+
+    /**
+     * Вывод всех пользователей
+     * @return mixed
+     */
+    public function users()
+    {
+        $users = User::all();
+
+        # compact => ['users => $users]
+        return view('users', compact('users'));
+    }
 }
